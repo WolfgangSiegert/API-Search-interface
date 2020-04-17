@@ -4,37 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitHub Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/mock/search-results.js"></script>
     <script src="/js/main.js" defer></script>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <div class="search-bar">
-      <div class="logo">
-        <img src="/assets/GitHub_Logo.png" alt="GitHub" />
+    <div id="app">
+      <div class="search-bar">
+        <div class="logo">
+          <img src="/assets/GitHub_Logo.png" alt="GitHub" />
+        </div>
+        <!-- <form v-on:submit="sendQuery()"> -->
+        <form @submit.prevent="sendQuery()">
+          <input v-model="query" type="text" name="query" id="query-id" />
+          <input type="submit" value="Search in GitHub" />
+        </form>
       </div>
-      <form action="">
-        <input type="text" name="" id="" />
-        <input type="submit" value="Search in GitHub" />
-      </form>
-    </div>
-    <div class="search-results">
-      <div class="search-result">
-        <div class="search-result-link">
-          <a href="https://github.com">
-            <div class="html-url">https://github.com</div>
-            <h2>GitHub</h2>
-          </a>
-        </div>
-        <div class="search-result-description">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod magni
-            sed doloremque ducimus itaque officia eius distinctio. Ipsam,
-            dignissimos nulla.
-          </p>
-        </div>
-        <div class="search-result-extras">
-          <span>Stars: 3000</span>
+      <div class="search-results">
+        <div
+          v-for="result in searchResults"
+          :key="result.id"
+          class="search-result"
+        >
+          <div class="search-result-link">
+            <a :href="result.html_url">
+              <div class="html-url">{{result.html_url}}</div>
+              <h2>{{result.full_name}}</h2>
+            </a>
+          </div>
+          <div class="search-result-description">
+            <p>{{result.description}}</p>
+          </div>
+          <div class="search-result-extras">
+            <span>Stargazers: {{result.stargazers_count}}</span>
+          </div>
         </div>
       </div>
     </div>

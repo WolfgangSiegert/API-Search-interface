@@ -1,4 +1,37 @@
-const promise = axios({
+const app = new Vue({
+  el: "#app",
+  data: {
+    query: "",
+    searchResults: null
+  },
+  methods: {
+    sendQuery() {
+      // alert("hello submit");
+      console.log(`hello, submit this: ${this.query}`);
+      this.searchResults = mockSearchResults.items;
+      console.log(this.searchResults);
+      axios({
+        method: "get",
+        url: "https://api.github.com/search/repositories",
+        params: {
+          query: `q=${app.query}`
+        }
+      })
+        .then(response => {
+          // throw Error("error in then");
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(this.axios.url + this.axios.query);
+          console.log(`Something went wrong: ${error}`);
+        });
+    }
+  }
+});
+
+//***** AXIOS Playground *******/
+//******************************/
+/* const promise = axios({
   method: "get",
   url: "https://api.chucknorris.io/jokes/search",
   params: {
@@ -14,7 +47,7 @@ promise.catch(error => {
 });
 promise.finally(() => {
   console.log(`Request was finished!`);
-});
+}); */
 
 //***************************** */
 axios({
@@ -25,14 +58,14 @@ axios({
   }
 })
   .then(response => {
-    throw Error("error in then");
+    // throw Error("error in then");
     console.log(response);
   })
   .catch(error => {
-    console.log(`2nd Something went wrong: ${error}`);
+    console.log(`Something went wrong: ${error}`);
   });
 
-axios({
+/* axios({
   method: "get",
   url: "https://api.chucknorris.io/joes/search",
   params: {
@@ -45,4 +78,4 @@ axios({
   })
   .catch(error => {
     console.log(`3rd Something went wrong: ${error}`);
-  });
+  }); */
