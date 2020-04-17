@@ -8,21 +8,22 @@ const app = new Vue({
     sendQuery() {
       // alert("hello submit");
       console.log(`hello, submit this: ${this.query}`);
-      this.searchResults = mockSearchResults.items;
-      console.log(this.searchResults);
+      // this.searchResults = mockSearchResults.items;
+      // console.log(this.searchResults);
       axios({
         method: "get",
         url: "https://api.github.com/search/repositories",
         params: {
-          query: `q=${app.query}`
+          q: app.query
         }
       })
         .then(response => {
           // throw Error("error in then");
           console.log(response);
+          this.searchResults = response.data.items;
         })
         .catch(error => {
-          console.log(this.axios.url + this.axios.query);
+          // console.log(this.axios.url + this.axios.query);
           console.log(`Something went wrong: ${error}`);
         });
     }
@@ -50,7 +51,7 @@ promise.finally(() => {
 }); */
 
 //***************************** */
-axios({
+/* axios({
   method: "get",
   url: "https://api.chucknorris.io/jokes/search",
   params: {
@@ -63,7 +64,7 @@ axios({
   })
   .catch(error => {
     console.log(`Something went wrong: ${error}`);
-  });
+  }); */
 
 /* axios({
   method: "get",
