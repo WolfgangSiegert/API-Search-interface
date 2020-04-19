@@ -3,11 +3,15 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+button {
+  margin: 1em;
+}
 a {
   outline: 0;
 }
 img {
   width: 100%;
+  max-width: 250px;
 }
 
 h2 {
@@ -33,6 +37,9 @@ h2 {
 .logo {
   width: 400px;
   max-width: 95vw;
+  display: flex;
+  justify-content: center;
+  margin: 1em;
 }
 
 .search-results {
@@ -47,4 +54,11 @@ h2 {
 .search-results > * {
   margin-bottom: 3em;
   margin-left: 1em;
+}
+
+.search-result-description {
+  font-size: 1.5em;
+}
+.search-result-extras {
+  font-size: 0.7em;
 }

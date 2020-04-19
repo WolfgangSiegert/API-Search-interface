@@ -2,25 +2,72 @@ const app = new Vue({
   el: "#app",
   data: {
     query: "",
-    searchResults: null
+    searchResults: null,
+    error: false
   },
   methods: {
+    formatDate(paramDate) {
+      return new Date(paramDate).toLocaleString("en-EN");
+    },
     sendQuery() {
       // alert("hello submit");
       console.log(`hello, submit this: ${this.query}`);
       // this.searchResults = mockSearchResults.items;
       // console.log(this.searchResults);
+      // axios({
+      //   method: "get",
+      //   url: "https://api.github.com/search/repositories",
+      //   params: {
+      //     q: app.query
+      //   }
+      // })
+      //   .then(response => {
+      //     // throw Error("error in then");
+      //     console.log(response);
+      //     this.searchResults = response.data.items;
+      //   })
+      //   .catch(error => {
+      //     // console.log(this.axios.url + this.axios.query);
+      //     console.log(`Something went wrong: ${error}`);
+      //   });
       axios({
         method: "get",
-        url: "https://api.github.com/search/repositories",
+        url: "https://api.chucknorris.io/jokes/search",
         params: {
-          q: app.query
+          query: app.query
         }
       })
         .then(response => {
           // throw Error("error in then");
           console.log(response);
-          this.searchResults = response.data.items;
+          // this.searchResults = response.data.result;
+          response.data.result.length == 0
+            ? (this.searchResults = [
+                {
+                  value: "no Search Results",
+                  query: this.query
+                }
+              ])
+            : (this.searchResults = response.data.result);
+        })
+        .catch(error => {
+          // console.log(this.axios.url + this.axios.query);
+          console.log(`Something went wrong: ${error}`);
+          this.searchResults = [
+            { value: "no Search Results", query: this.query }
+          ];
+          this.error = true;
+        });
+    },
+    getRandomQuery() {
+      axios({
+        method: "get",
+        url: "https://api.chucknorris.io/jokes/random"
+      })
+        .then(response => {
+          // throw Error("error in then");
+          console.log(response);
+          this.searchResults = [response.data];
         })
         .catch(error => {
           // console.log(this.axios.url + this.axios.query);
